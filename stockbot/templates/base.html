@@ -1,0 +1,150 @@
+{# base html template #}
+{% load staticfiles i18n %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <!-- Meta ======================================================================== -->
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Used by search engines -->
+    <meta name="description" content="Quandl API">
+
+    <!-- Search keywords -->
+    <meta name="keywords" content="quandl, api">
+    
+    <!-- Indicates if the search engine should add this page to their results -->
+    <meta name="robots" content="follow">
+    
+    <meta name="author" content="TA">
+
+    <!-- Page specific Meta. Each tag must be given the class "meta_tag" -->
+    {% block meta %}{% endblock meta %}
+
+    <!-- END Meta ==================================================================== -->
+
+
+    <!-- Page Title ================================================================== -->
+    
+    <title>{% block title %}{{ site_name }}{% endblock title %}</title>
+
+    <!-- END Page Title ============================================================== -->
+
+    
+    <!-- CSS ========================================================================= -->
+
+    <!-- Site wide CSS -->
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Page specific CSS. Each link must be given the class "css_file" -->
+    {% block css %}{% endblock css %}
+    
+    <!-- END CSS ===================================================================== -->
+
+  </head>
+
+
+
+
+  <body>
+
+    <!-- navigation ================================================================== -->
+
+    <header role="banner">
+        
+        <nav class="nav_bar container" role="navigation">
+            
+            <ul id="nav_ul">
+
+                <li>
+                    
+                    <a href="{% url 'index' %}" title="Quandl API">Quandl API</a>
+
+                </li><li>
+                    
+                    <a href="{% url 'databases:list' %}" title="Databases">Databases</a>
+
+                </li><li>
+                    
+                    <a href="{% url 'datasets:list' %}" title="Datasets">Datasets</a>
+
+                </li>
+            
+            </ul>
+
+        </nav>
+
+    </header>
+
+    <!-- END navigation ============================================================== -->
+
+    
+
+
+    <!-- Main Content ================================================================ -->
+    
+    <div id="content_container">
+
+        <!-- messages ==================================================================== -->
+
+        <div id="messages" class="box_border{% if message %} show no_js"{% endif %}">
+
+            <div class="wrapper">
+
+                <div class="container box_border">
+                     
+                    <div class="text"> 
+
+                        {% if message %}
+                        <p>{{ message }}</p>
+                        {% endif %}
+                    
+                    </div>
+
+                </div>
+
+            </div>
+            
+        </div>
+
+        <!-- end messages ================================================================ -->
+
+        <main role="main" id="main_content" class="container box_border">
+
+            {% block content %}{% endblock content %}
+            
+        </main>
+
+    </div>
+
+    <!-- END Main Content ============================================================ -->
+    
+
+
+
+    <!-- Javascript ================================================================== -->
+    
+    {% block base_js %}
+    
+    <!-- Site wide Javascript files -->
+    <script src="{% static 'js/libraries/jquery-1.12.2.min.js' %}"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    
+    {% endblock base_js %}
+
+    <!-- Page specific Javascript files. Each file must be given the class "js_file" -->
+    {% block js %}{% endblock js %}
+
+    <!-- END Javascript ============================================================== -->
+
+  </body>
+
+</html>

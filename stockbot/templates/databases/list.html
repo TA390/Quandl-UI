@@ -1,0 +1,73 @@
+{% extends base_template %}
+{% load staticfiles i18n %}
+
+
+{% block title %}Databases{% endblock title %}
+
+
+{% block css %}<link href="{% static 'css/databases/list.css' %}" rel="stylesheet" type="text/css">{% endblock css %}
+
+
+{% block content %}
+<div id="databases_list_view">
+
+	<div id="title">
+
+		<h1>Databases</h1>
+		{% if meta %}
+		<small>page <span id="page_number">{{meta.current_page}}</span> of {{meta.total_pages}}</small>
+		{% endif %}
+	
+	</div>
+
+	<div>
+
+	<form actions="{% url 'databases:list' %}" method="get">
+
+		<input class="text box_border" type="text" name="q" value="{{q}}">
+		<input class="submit box_border" type="submit" name="submit" value="Search">
+
+	</form>
+
+	</div>
+
+	<table id="databases">
+
+		<tr class="columns">
+			<th>Name</th>
+			<th>Code</th>
+			<th>Description</th>
+			<th>Premium</th>
+			<th>Download</th>
+		</tr>
+
+		{% for database in databases %}
+		<tr class="row">
+			<td class="name">{{ database.name }}</td>
+			<td class="database_code">{{ database.database_code }}</td>
+			<td class="description">{{ database.description }}</td>
+			<td class="premium">{{ database.premium }}</td>
+			<td class="download"><a href="{% url 'databases:download' database.database_code %}" class="download_db">Download</a></td>
+		</tr>
+		{% empty %}
+		<tr class="row">
+			<td class="empty">No databases found.</td>
+			<td class="spacing"></td>
+			<td class="spacing"></td>
+			<td class="spacing"></td>
+		</tr>
+		{% endfor%}
+
+	</table>
+
+	{% if meta and meta.current_page < meta.total_pages %}
+	<div id="load_databases">
+		<a href="{% url 'databases:list' meta.next_page %}">Load databases</a>
+	</div>
+	{% endif %}
+
+</div>
+{% endblock content %}
+
+
+{% block js %}<script src="{% static 'js/databases/list.js' %}"></script>{% endblock js %}
